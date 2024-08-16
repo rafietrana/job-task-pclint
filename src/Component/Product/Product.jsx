@@ -8,8 +8,7 @@ const Product = () => {
   const [brandFilter, setBrandFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  console.log(productData);
-  
+  const [sortOption, setSortOption] = useState("priceLowToHigh");
 
   const itemsPerPage = 10;
   const numberOfPages = Math.ceil(countProductData / itemsPerPage);
@@ -39,7 +38,7 @@ const Product = () => {
             brandFilter
           )}&category=${encodeURIComponent(categoryFilter)}&priceMin=${
             priceRange[0]
-          }&priceMax=${priceRange[1]}`
+          }&priceMax=${priceRange[1]}&sort=${sortOption}`
         );
         const result = await response.json();
         setProductData(result.products);
@@ -49,7 +48,7 @@ const Product = () => {
     };
 
     fetchProducts();
-  }, [currentPage, searchQuery, brandFilter, categoryFilter, priceRange]); 
+  }, [currentPage, searchQuery, brandFilter, categoryFilter, priceRange, sortOption]);
 
   const handlePrevButton = () => {
     if (currentPage > 0) {
@@ -123,6 +122,20 @@ const Product = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="p-3 border border-gray-300 rounded-lg w-full md:w-1/2 lg:w-1/3 shadow-md mb-6"
             />
+
+            {/* Sorting Options */}
+            <div className="mb-6">
+              <label className="block mb-2">Sort By</label>
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                className="p-2 border border-gray-300 rounded-lg w-full"
+              >
+                <option value="priceLowToHigh">Price: Low to High</option>
+                <option value="priceHighToLow">Price: High to Low</option>
+                <option value="dateNewestFirst">Date Added: Newest First</option>
+              </select>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {productData.length > 0 ? (
