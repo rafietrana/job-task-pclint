@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -33,6 +33,15 @@ const Slider = () => {
     setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1);
   };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      nextSlide();
+    }, 2000); // 1 second
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [currentSlide]);
+
   return (
     <div className="relative overflow-hidden">
       <div
@@ -40,13 +49,13 @@ const Slider = () => {
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {slides.map((slide, index) => (
-          <div 
+          <div
             key={index}
-            className="min-w-full h-[500px] flex items-center justify-center bg-cover bg-left-top"
+            className="min-w-full h-[600px] flex items-center justify-center bg-cover bg-left-top"
             style={{ backgroundImage: `url(${slide.image})` }}
           >
-            <div className="text-left  w-11/12  p-8 lg:p-12  ">
-              {/* <h2 className="text-3xl lg:text-5xl font-bold text-gray-800 text-left ">{slide.title}</h2> */}
+            <div className="text-left w-11/12 p-8 lg:p-12">
+              {/* <h2 className="text-3xl lg:text-5xl font-bold text-gray-800 text-left">{slide.title}</h2> */}
               {/* <p className="mt-4 text-lg lg:text-xl text-gray-600">{slide.description}</p> */}
               {/* <button className="mt-6 px-4 py-2 bg-yellow-400 text-gray-800 font-semibold rounded-md hover:bg-yellow-500">
                 Shop Now
@@ -59,13 +68,13 @@ const Slider = () => {
       {/* Navigation Controls */}
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 p-3 ml-11 bg-red-500  text-white rounded-full shadow-lg"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 p-3 ml-11 bg-red-500 text-white rounded-full shadow-lg"
       >
         &#9664;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 p-3 mr-11 bg-red-500   text-white rounded-full shadow-lg"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 p-3 mr-11 bg-red-500 text-white rounded-full shadow-lg"
       >
         &#9654;
       </button>

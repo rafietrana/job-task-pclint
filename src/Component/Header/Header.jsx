@@ -21,7 +21,7 @@ const Header = () => {
                 placeholder="Search"
                 className="flex-grow bg-transparent outline-none p-1 text-sm lg:text-base"
               />
-              <button className="bg-pink-600 text-white p-2 rounded-md">
+              <button className="bg-red-500 text-white p-2 rounded-md">
                 <svg
                   className="w-5 h-5"
                   fill="none"
