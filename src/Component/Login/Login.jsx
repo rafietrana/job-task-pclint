@@ -4,9 +4,9 @@ import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
-  const { signInWithGoogle } = useContext(AuthContext);
+  const { signInWithGoogle, loginUser } = useContext(AuthContext);
 
-const handleLoginBtn = (e) => {
+  const handleLoginBtn = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -14,6 +14,12 @@ const handleLoginBtn = (e) => {
 
     console.log("Email:", email);
     console.log("Password:", password);
+
+    loginUser(email, password).then((loginCredential) => {
+      const user = loginCredential.user;
+      console.log("User created successfully:", user);
+      alert("alhamdulillah sucessfully logedin user");
+    });
   };
 
   const handleGoogleSignIn = () => {

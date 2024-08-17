@@ -5,7 +5,14 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
  
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, user } = useContext(AuthContext);
+
+
+
+
+
+  console.log('alhamdulillah user from singup component', user);
+  
 
   const handleSignUpBtn = (e) => {
     e.preventDefault();

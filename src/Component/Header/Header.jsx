@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaSearch, FaHeart, FaUser, FaShoppingCart } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 // Category data
 const categories = [
@@ -15,6 +16,12 @@ const categories = [
 
 const Header = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+
+  const handleLogoutBtn = () => {
+    logOut();
+  };
 
   return (
     <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white sticky top-0 z-50 shadow-lg">
@@ -79,7 +86,10 @@ const Header = () => {
             {isDropdownOpen && (
               <ul className="absolute left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 {categories.map((item, index) => (
-                  <li key={index} className="hover:bg-red-100 hover:text-red-600 transition duration-300">
+                  <li
+                    key={index}
+                    className="hover:bg-red-100 hover:text-red-600 transition duration-300"
+                  >
                     <Link
                       to={`/category/${item.category.toLowerCase()}`}
                       className="block px-4 py-2 text-gray-700"
@@ -93,18 +103,61 @@ const Header = () => {
           </div>
 
           <div className="flex space-x-6 text-red-600 text-sm lg:text-base">
-            <Link to="/about" className="hover:text-red-700 transition duration-300">About Us</Link>
-            <Link to="/collection" className="hover:text-red-700 transition duration-300">Collection</Link>
-            <Link to="/contact" className="hover:text-red-700 transition duration-300">Contact</Link>
-            <Link to="/blog" className="hover:text-red-700 transition duration-300">Blog</Link>
-            <Link to="/shop" className="hover:text-red-700 transition duration-300">Shop</Link>
-            <Link to="/services" className="hover:text-red-700 transition duration-300">Services</Link>
+            <Link to="/" className="hover:text-red-700 transition duration-300">
+              Home
+            </Link>
+            <Link
+              to="/collection"
+              className="hover:text-red-700 transition duration-300"
+            >
+              Collection
+            </Link>
+            <Link
+              to="/contact"
+              className="hover:text-red-700 transition duration-300"
+            >
+              Contact
+            </Link>
+            <Link
+              to="/blog"
+              className="hover:text-red-700 transition duration-300"
+            >
+              Blog
+            </Link>
+            <Link
+              to="/shop"
+              className="hover:text-red-700 transition duration-300"
+            >
+              Shop
+            </Link>
+            <Link
+              to="/services"
+              className="hover:text-red-700 transition duration-300"
+            >
+              Services
+            </Link>
           </div>
           <div className="flex space-x-4 mt-4 lg:mt-0">
-            <Link to="/login" className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300">
-              Login
-            </Link>
-            <Link to="/signup" className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300">
+            {user ? (
+              <button
+                onClick={handleLogoutBtn}
+                className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300"
+              >
+                Login
+              </Link>
+            )}
+
+            <Link
+              to="/singup"
+              className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300"
+            >
               Sign Up
             </Link>
           </div>
