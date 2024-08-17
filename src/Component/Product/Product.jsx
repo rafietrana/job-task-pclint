@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaSearch, FaFilter, FaSort } from "react-icons/fa";
 
 const Product = () => {
   const [productData, setProductData] = useState([]);
@@ -64,68 +65,73 @@ const Product = () => {
 
   return (
     <div className="bg-gray-100 py-8 min-h-screen">
-      <div className="container mx-auto px-4">
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="container w-10/12 mx-auto px-4">
+        <div className="flex flex-col md:flex-row gap-6">
           {/* Filter Sidebar */}
-          <div className="bg-white p-4 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold mb-4">Filters</h3>
+          <div className="bg-white p-6 rounded-lg shadow-md flex-shrink-0 md:w-1/4">
+            <h3 className="text-xl font-semibold mb-4">Filters</h3>
 
             <div className="mb-4">
-              <label className="block mb-2">Brand Name</label>
+              <label className="block mb-2 font-medium">Brand Name</label>
               <input
                 type="text"
                 value={brandFilter}
                 onChange={(e) => setBrandFilter(e.target.value)}
-                className="p-2 border border-gray-300 rounded-lg w-full"
+                className="p-3 border border-gray-300 rounded-lg w-full"
               />
             </div>
 
             <div className="mb-4">
-              <label className="block mb-2">Category Name</label>
+              <label className="block mb-2 font-medium">Category Name</label>
               <input
                 type="text"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="p-2 border border-gray-300 rounded-lg w-full"
+                className="p-3 border border-gray-300 rounded-lg w-full"
               />
             </div>
 
             <div className="mb-4">
-              <label className="block mb-2">Price Range</label>
-              <input
-                type="number"
-                value={priceRange[0]}
-                onChange={(e) =>
-                  setPriceRange([parseInt(e.target.value), priceRange[1]])
-                }
-                className="p-2 border border-gray-300 rounded-lg w-full mb-2"
-                placeholder="Min Price"
-              />
-              <input
-                type="number"
-                value={priceRange[1]}
-                onChange={(e) =>
-                  setPriceRange([priceRange[0], parseInt(e.target.value)])
-                }
-                className="p-2 border border-gray-300 rounded-lg w-full"
-                placeholder="Max Price"
-              />
+              <label className="block mb-2 font-medium">Price Range</label>
+              <div className="flex gap-4">
+                <input
+                  type="number"
+                  value={priceRange[0]}
+                  onChange={(e) =>
+                    setPriceRange([parseInt(e.target.value), priceRange[1]])
+                  }
+                  className="p-3 border border-gray-300 rounded-lg w-full"
+                  placeholder="Min Price"
+                />
+                <input
+                  type="number"
+                  value={priceRange[1]}
+                  onChange={(e) =>
+                    setPriceRange([priceRange[0], parseInt(e.target.value)])
+                  }
+                  className="p-3 border border-gray-300 rounded-lg w-full"
+                  placeholder="Max Price"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="md:col-span-2">
-            {/* Search input */}
-            <input
-              type="text"
-              placeholder="Search by product name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="p-3 border border-gray-300 rounded-lg w-full md:w-1/2 lg:w-1/3 shadow-md mb-6"
-            />
+          <div className="flex-1">
+            {/* Search Bar */}
+            <div className="flex items-center bg-white p-4 rounded-lg shadow-md mb-6">
+              <FaSearch className="text-gray-600 w-6 h-6 mr-2" />
+              <input
+                type="text"
+                placeholder="Search by product name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-grow p-3 border border-gray-300 rounded-lg outline-none"
+              />
+            </div>
 
             {/* Sorting Options */}
-            <div className="mb-6">
-              <label className="block mb-2">Sort By</label>
+            <div className="bg-white p-4 rounded-lg shadow-md mb-6 flex items-center gap-2">
+              <FaSort className="text-gray-600 w-6 h-6" />
               <select
                 value={sortOption}
                 onChange={(e) => setSortOption(e.target.value)}
@@ -137,27 +143,26 @@ const Product = () => {
               </select>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+            {/* Product Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {productData.length > 0 ? (
                 productData.map((dataProduct, idx) => (
                   <div
-                    className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                    className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
                     key={idx}
                   >
                     <figure className="relative">
                       <img
                         src={dataProduct?.image}
                         alt={dataProduct?.name}
-                        className="w-full h-64 object-cover"
+                        className="w-full h-48 object-cover"
                       />
-                      <div className="absolute top-0 left-0 bg-red-500 bg-opacity-70 text-white p-2 text-xs uppercase font-semibold">
+                      <div className="absolute top-2 left-2 bg-red-500 text-white p-2 text-xs uppercase font-semibold rounded-lg">
                         {dataProduct?.category}
                       </div>
                     </figure>
                     <div className="p-4">
-                      <h2 className="text-lg font-semibold text-gray-800 truncate mb-2">
-                        {dataProduct?.name}
-                      </h2>
+                      <h2 className="text-lg font-semibold text-gray-800 mb-2 truncate">{dataProduct?.name}</h2>
                       <p className="text-gray-600 text-sm mb-2">
                         {dataProduct?.description.slice(0, 60)}
                         {dataProduct?.description.length > 60 ? "..." : ""}
@@ -168,10 +173,10 @@ const Product = () => {
                       <p className="text-gray-600 mb-2 font-semibold">
                         Ratings: {dataProduct?.ratings}
                       </p>
-                      <p className="text-gray-600 mb-2 font-semibold">
+                      <p className="text-gray-600 mb-4 font-semibold">
                         Brand: {dataProduct?.brand}
                       </p>
-                      <button className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-300 ">
+                      <button className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-300">
                         Add To Cart
                       </button>
                     </div>
@@ -184,6 +189,7 @@ const Product = () => {
               )}
             </div>
 
+            {/* Pagination */}
             <div className="flex justify-center mt-6">
               <button
                 onClick={handlePrevButton}

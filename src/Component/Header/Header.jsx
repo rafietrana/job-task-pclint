@@ -1,80 +1,117 @@
 import { Link } from "react-router-dom";
+import { FaSearch, FaHeart, FaUser, FaShoppingCart } from "react-icons/fa";
+import { useState } from "react";
+
+// Category data
+const categories = [
+  { category: "Electronics" },
+  { category: "Accessories" },
+  { category: "Computers" },
+  { category: "Fitness" },
+  { category: "Home Appliances" },
+  { category: "Personal Care" },
+  { category: "Outdoor" },
+];
 
 const Header = () => {
-    return (
-      <div className="bg-white shadow-md">
-        <header className="w-11/12 lg:w-10/12 mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between py-4">
-            {/* Order Info */}
-            <div className="text-xs hidden md:block lg:flex  text-black p-2 rounded-md mb-4 lg:mb-0 lg:px-4">
-              Order Before 17:30, Shipped Today
-            </div>
-  
-            {/* Logo */}
-            <div className="flex items-center">
- 
-              <span className="text-xl font-bold text-gray-800 ml-2">Techayo</span>
-            </div>
-  
-            {/* Search Bar */}
-            <div className="flex items-center w-full lg:w-auto space-x-2 bg-gray-200 p-2 rounded-md flex-grow mx-4 mt-4 lg:mt-0 lg:max-w-md">
-              <input
-                type="text"
-                placeholder="Search"
-                className="flex-grow bg-transparent outline-none p-1 text-sm lg:text-base"
-              />
-              <button className="bg-red-500 text-white p-2 rounded-md">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 16l6-6M6 8h14m-8 8l6-6"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-  
-            {/* Icons (Wishlist, Account, Cart) */}
-            <div className="flex items-center space-x-4 mt-4 lg:mt-0">
-              <a href="#" className="text-gray-600 hover:text-gray-800 text-sm lg:text-base">
-                Wishlist
-              </a>
-              <a href="#" className="text-gray-600 hover:text-gray-800 text-sm lg:text-base">
-                Account
-              </a>
-              <a href="#" className="flex items-center space-x-1 text-gray-600 hover:text-gray-800 text-sm lg:text-base">
-                <span>Shopping Cart</span>
-                <span>$0.00</span>
-              </a>
-            </div>
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  return (
+    <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white sticky top-0 z-50 shadow-lg">
+      {/* Header Content */}
+      <header className="w-full lg:w-10/12 mx-auto flex flex-col lg:flex-row items-center justify-between py-4 px-4 lg:px-0">
+        {/* Logo */}
+        <div className="flex items-center space-x-2">
+          <span className="text-3xl font-bold text-white">Techayo</span>
+        </div>
+
+        {/* Search Bar */}
+        <div className="relative flex items-center w-full lg:w-auto space-x-2 bg-white p-2 rounded-full mx-4 mt-4 lg:mt-0 lg:max-w-md shadow-lg">
+          <input
+            type="text"
+            placeholder="Search for products..."
+            className="flex-grow bg-transparent outline-none p-2 text-sm lg:text-base rounded-full"
+          />
+          <button className="absolute right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-300">
+            <FaSearch className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Icons (Wishlist, Account, Cart) */}
+        <div className="flex items-center space-x-6 mt-4 lg:mt-0">
+          <Link
+            to="/wishlist"
+            className="text-white hover:text-yellow-300 flex items-center space-x-1 transition duration-300"
+          >
+            <FaHeart className="text-yellow-400" />
+            <span>Wishlist</span>
+          </Link>
+          <Link
+            to="/account"
+            className="text-white hover:text-gray-300 flex items-center space-x-1 transition duration-300"
+          >
+            <FaUser className="text-gray-200" />
+            <span>Account</span>
+          </Link>
+          <Link
+            to="/cart"
+            className="flex items-center space-x-1 text-white hover:text-gray-300 transition duration-300"
+          >
+            <FaShoppingCart className="text-gray-200" />
+            <span>$0.00</span>
+          </Link>
+        </div>
+      </header>
+
+      {/* Navigation Bar */}
+      <nav className="bg-white">
+        <div className="w-full lg:w-10/12 mx-auto flex flex-col lg:flex-row justify-between items-center p-4">
+          {/* Dropdown Button */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!isDropdownOpen)}
+              className="text-red-600 font-bold text-sm lg:text-base bg-transparent  rounded-full px-4 py-2 hover:text-red-700 transition duration-300"
+            >
+              All Categories
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <ul className="absolute left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                {categories.map((item, index) => (
+                  <li key={index} className="hover:bg-red-100 hover:text-red-600 transition duration-300">
+                    <Link
+                      to={`/category/${item.category.toLowerCase()}`}
+                      className="block px-4 py-2 text-gray-700"
+                    >
+                      {item.category}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-        </header>
-  
-        {/* Navigation Bar */}
-        <nav className="bg-[#DB2777]">
-          <div className="w-11/12 lg:w-10/12 mx-auto flex flex-col lg:flex-row justify-between items-center p-4">
-            <div className="text-white font-bold text-sm lg:text-base mb-2 lg:mb-0">ALL CATEGORIES</div>
-            <div className="hidden md:flex space-x-6 text-white text-sm lg:text-base">
-              <a href="#" className="hover:text-white">About Us</a>
-              <a href="#" className="hover:text-white">Collection</a>
-              <a href="#" className="hover:text-white">Contact</a>
-              <a href="#" className="hover:text-white">Blog</a>
-              <a href="#" className="hover:text-white">Shop</a>
-              <a href="#" className="hover:text-white">Services</a>
-                 <Link className="bg-white px-3 text-black p-1">SingUp</Link>
-            </div>
+
+          <div className="flex space-x-6 text-red-600 text-sm lg:text-base">
+            <Link to="/about" className="hover:text-red-700 transition duration-300">About Us</Link>
+            <Link to="/collection" className="hover:text-red-700 transition duration-300">Collection</Link>
+            <Link to="/contact" className="hover:text-red-700 transition duration-300">Contact</Link>
+            <Link to="/blog" className="hover:text-red-700 transition duration-300">Blog</Link>
+            <Link to="/shop" className="hover:text-red-700 transition duration-300">Shop</Link>
+            <Link to="/services" className="hover:text-red-700 transition duration-300">Services</Link>
           </div>
-        </nav>
-      </div>
-    );
-  };
-  
-  export default Header;
-  
+          <div className="flex space-x-4 mt-4 lg:mt-0">
+            <Link to="/login" className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300">
+              Login
+            </Link>
+            <Link to="/signup" className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300">
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </div>
+  );
+};
+
+export default Header;

@@ -8,7 +8,7 @@ const Shop = () => {
     return (
         <div>
             <Slider></Slider>
-            <ProductImage></ProductImage>
+            {/* <ProductImage></ProductImage> */}
            <Category></Category>
              <Product></Product>
             

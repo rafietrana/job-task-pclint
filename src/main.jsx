@@ -6,6 +6,7 @@ import Layout from "./Component/Layout/Layout";
 import Shop from "./Component/Shop/Shop";
 import AuthProvider from "./Component/AuthProvider/AuthProvider";
 import SingUp from "./Component/SingUp/SingUp";
+import Login from "./Component/Login/Login";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         path: "/singup",
         element: <SingUp></SingUp>,
       },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      }
     ],
   },
 ]);
