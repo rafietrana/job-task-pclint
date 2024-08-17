@@ -11,7 +11,7 @@ const SignUp = () => {
 
 
 
-  console.log('alhamdulillah user from singup component', user);
+  // console.log('alhamdulillah user from singup component', user);
   
 
   const handleSignUpBtn = (e) => {
@@ -27,24 +27,24 @@ const SignUp = () => {
         .then((userCredential) => {
           
           const user = userCredential.user;
-          console.log("User created successfully:", user);
+          // console.log("User created successfully:", user);
            alert('alhamdulillah sucessfully created user')
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.error("Error creating user:", errorCode, errorMessage);
+          // console.error("Error creating user:", errorCode, errorMessage);
           alert("i found error in your information please try again")
         });
     } else {
-      console.error("Passwords do not match!");
+      // console.error("Passwords do not match!");
     }
 
  
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
+    // console.log("Name:", name);
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // console.log("Confirm Password:", confirmPassword);
   };
 
   return (

@@ -12,12 +12,12 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // console.log("Email:", email);
+    // console.log("Password:", password);
 
     loginUser(email, password).then((loginCredential) => {
       const user = loginCredential.user;
-      console.log("User created successfully:", user);
+      // console.log("User created successfully:", user);
       alert("alhamdulillah sucessfully logedin user");
     });
   };
@@ -25,10 +25,10 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((user) => {
-        console.log("Signed in with Google:", user);
+        // console.log("Signed in with Google:", user);
       })
       .catch((error) => {
-        console.error("Error during Google sign-in:", error);
+        // console.error("Error during Google sign-in:", error);
       });
   };
 

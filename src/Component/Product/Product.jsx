@@ -18,11 +18,13 @@ const Product = () => {
   useEffect(() => {
     const fetchProductCount = async () => {
       try {
-        const response = await fetch("http://localhost:3000/productcount");
+        const response = await fetch(
+          "https://job-task-serverph.vercel.app/productcount"
+        );
         const result = await response.json();
         setCountProductData(result.count);
       } catch (error) {
-        console.error("Error fetching product count:", error);
+        // console.error("Error fetching product count:", error);
       }
     };
 
@@ -33,7 +35,7 @@ const Product = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getProduct?page=${currentPage}&size=${itemsPerPage}&search=${encodeURIComponent(
+          `https://job-task-serverph.vercel.app/getProduct?page=${currentPage}&size=${itemsPerPage}&search=${encodeURIComponent(
             searchQuery
           )}&brand=${encodeURIComponent(
             brandFilter
@@ -44,12 +46,19 @@ const Product = () => {
         const result = await response.json();
         setProductData(result.products);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        // console.error("Error fetching products:", error);
       }
     };
 
     fetchProducts();
-  }, [currentPage, searchQuery, brandFilter, categoryFilter, priceRange, sortOption]);
+  }, [
+    currentPage,
+    searchQuery,
+    brandFilter,
+    categoryFilter,
+    priceRange,
+    sortOption,
+  ]);
 
   const handlePrevButton = () => {
     if (currentPage > 0) {
@@ -139,7 +148,9 @@ const Product = () => {
               >
                 <option value="priceLowToHigh">Price: Low to High</option>
                 <option value="priceHighToLow">Price: High to Low</option>
-                <option value="dateNewestFirst">Date Added: Newest First</option>
+                <option value="dateNewestFirst">
+                  Date Added: Newest First
+                </option>
               </select>
             </div>
 
@@ -162,7 +173,9 @@ const Product = () => {
                       </div>
                     </figure>
                     <div className="p-4">
-                      <h2 className="text-lg font-semibold text-gray-800 mb-2 truncate">{dataProduct?.name}</h2>
+                      <h2 className="text-lg font-semibold text-gray-800 mb-2 truncate">
+                        {dataProduct?.name}
+                      </h2>
                       <p className="text-gray-600 text-sm mb-2">
                         {dataProduct?.description.slice(0, 60)}
                         {dataProduct?.description.length > 60 ? "..." : ""}

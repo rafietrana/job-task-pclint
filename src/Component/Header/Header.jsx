@@ -17,7 +17,7 @@ const categories = [
 const Header = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   const handleLogoutBtn = () => {
     logOut();

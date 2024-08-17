@@ -23,13 +23,13 @@ const AuthProvider = ({ children }) => {
       .then((result) => {
         const user = result.user;
         setUser(user);
-        console.log("User logged in:", user);
+        // console.log("User logged in:", user);
         return user;
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.error("Error logging in:", errorCode, errorMessage);
+        // console.error("Error logging in:", errorCode, errorMessage);
         throw error;
       });
   };
@@ -40,14 +40,14 @@ const AuthProvider = ({ children }) => {
       .then((result) => {
         const user = result.user;
         setUser(user);
-        console.log("User signed in with Google:", user);
+        // console.log("User signed in with Google:", user);
         return user;
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        console.error("Error signing in with Google:", errorCode, errorMessage);
+        // console.error("Error signing in with Google:", errorCode, errorMessage);
         throw error;
       });
   };
@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.error("i found error:", errorCode, errorMessage);
+        // console.error("i found error:", errorCode, errorMessage);
   
       });
   };
