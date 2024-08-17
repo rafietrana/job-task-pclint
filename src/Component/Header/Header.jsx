@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
     return (
       <div className="bg-white shadow-md">
@@ -66,7 +68,7 @@ const Header = () => {
               <a href="#" className="hover:text-white">Blog</a>
               <a href="#" className="hover:text-white">Shop</a>
               <a href="#" className="hover:text-white">Services</a>
-              <a href="#" className="hover:text-white">View More</a>
+                 <Link className="bg-white px-3 text-black p-1">SingUp</Link>
             </div>
           </div>
         </nav>

@@ -4,22 +4,31 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Layout from "./Component/Layout/Layout";
 import Shop from "./Component/Shop/Shop";
+import AuthProvider from "./Component/AuthProvider/AuthProvider";
+import SingUp from "./Component/SingUp/SingUp";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element:   <Layout></Layout>,
-    children:[
+    element: <Layout></Layout>,
+    children: [
       {
-        path: '/',
-        element: <Shop></Shop>
-      }
-    ]
+        path: "/",
+        element: <Shop></Shop>,
+      },
+      {
+        path: "/singup",
+        element: <SingUp></SingUp>,
+      },
+    ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      {" "}
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
