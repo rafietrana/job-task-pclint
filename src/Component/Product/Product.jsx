@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaSearch, FaFilter, FaSort } from "react-icons/fa";
+import { FaSearch,  FaSort } from "react-icons/fa";
 
 const Product = () => {
   const [productData, setProductData] = useState([]);
@@ -10,6 +10,8 @@ const Product = () => {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [sortOption, setSortOption] = useState("priceLowToHigh");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const itemsPerPage = 10;
   const numberOfPages = Math.ceil(countProductData / itemsPerPage);
@@ -18,13 +20,17 @@ const Product = () => {
   useEffect(() => {
     const fetchProductCount = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           "https://job-task-serverph.vercel.app/productcount"
         );
+        if (!response.ok) throw new Error("Failed to fetch product count");
         const result = await response.json();
         setCountProductData(result.count);
       } catch (error) {
-        // console.error("Error fetching product count:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -34,6 +40,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `https://job-task-serverph.vercel.app/getProduct?page=${currentPage}&size=${itemsPerPage}&search=${encodeURIComponent(
             searchQuery
@@ -43,10 +50,13 @@ const Product = () => {
             priceRange[0]
           }&priceMax=${priceRange[1]}&sort=${sortOption}`
         );
+        if (!response.ok) throw new Error("Failed to fetch products");
         const result = await response.json();
-        setProductData(result.products);
+        setProductData(result.products || []);
       } catch (error) {
-        // console.error("Error fetching products:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -156,7 +166,15 @@ const Product = () => {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {productData.length > 0 ? (
+              {loading ? (
+                <div className="col-span-full text-center text-gray-600">
+                  Loading products...
+                </div>
+              ) : error ? (
+                <div className="col-span-full text-center text-red-600">
+                  {error}
+                </div>
+              ) : productData.length > 0 ? (
                 productData.map((dataProduct, idx) => (
                   <div
                     className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
@@ -207,17 +225,18 @@ const Product = () => {
               <button
                 onClick={handlePrevButton}
                 className="bg-gray-200 px-4 py-2 rounded-md text-gray-700 hover:bg-gray-300 transition"
+                disabled={currentPage === 0}
               >
                 Prev
               </button>
               {pages.map((page) => (
                 <button
                   onClick={() => setCurrentPage(page)}
-                  className={`px-4 py-2 mx-1 rounded-md text-sm ${
-                    currentPage === page
+                  className={`px-4 py-2 rounded-md mx-1 ${
+                    page === currentPage
                       ? "bg-red-500 text-white"
-                      : "bg-gray-200 text-gray-600"
-                  } hover:bg-gray-300 transition`}
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                  }`}
                   key={page}
                 >
                   {page + 1}
@@ -226,6 +245,7 @@ const Product = () => {
               <button
                 onClick={handleNextButton}
                 className="bg-gray-200 px-4 py-2 rounded-md text-gray-700 hover:bg-gray-300 transition"
+                disabled={currentPage === pages.length - 1}
               >
                 Next
               </button>
